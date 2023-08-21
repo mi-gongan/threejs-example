@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import TWEEN from "@tweenjs/tween.js";
+import { gsap } from "gsap";
 
 export default function ChangeSmooth() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -26,6 +27,12 @@ export default function ChangeSmooth() {
         alpha: true,
       });
       renderer.setClearColor(0x000000, 0);
+      // uv 맵
+      const textureLoader = new THREE.TextureLoader();
+      const texture1 = textureLoader.load("/material/hoodie_1.png");
+      const texture2 = textureLoader.load("/material/hoodie_2.png");
+      const material1 = new THREE.MeshStandardMaterial({ map: texture1 });
+      const material2 = new THREE.MeshStandardMaterial({ map: texture2 });
       // 라이트
       const first_light = new THREE.DirectionalLight(0xffffff, 10);
       first_light.position.set(200, 100, 100);
@@ -35,14 +42,14 @@ export default function ChangeSmooth() {
       second_light.position.set(-100, -100, -100);
       scene.add(second_light);
 
-      const third_light = new THREE.AmbientLight(0xffffff, 2);
+      const third_light = new THREE.AmbientLight(0xffffff, 0.5);
       scene.add(third_light);
 
       const camera = new THREE.PerspectiveCamera(50, 1);
       camera.position.set(1.5, 1, 1);
 
       let currentModelIndex = 0;
-      let models: THREE.Group[] = [];
+      let models: THREE.Group[] = new Array(2);
       let transitionInProgress = false;
 
       // GLTFLoader 생성
@@ -74,13 +81,22 @@ export default function ChangeSmooth() {
       };
 
       // 모델들을 로드
-      loadModel("/3d-model/F_BBB_CUSTOM_D001.glb", (model) => {
-        models.push(model);
+      loadModel("/3d-model/dress.glb", (model) => {
+        models[0] = model;
         scene.add(model);
       });
 
-      loadModel("/3d-model/F_BBB_CUSTOM_T005.glb", (model) => {
-        models.push(model);
+      let currentMaterial: THREE.MeshStandardMaterial;
+
+      loadModel("/3d-model/hoodie.glb", (model) => {
+        model.traverse((o: any) => {
+          if (o.isMesh) {
+            o.material.metalness = 0.7;
+            o.material = material1;
+          }
+        });
+        currentMaterial = material1;
+        models[1] = model;
         model.visible = false; // 초기에 보이지 않게 설정
         scene.add(model);
       });
@@ -116,15 +132,50 @@ export default function ChangeSmooth() {
 
       // 스크롤 이벤트 리스너 등록
       window.addEventListener("scroll", () => {
-        models[currentModelIndex].rotation.y = window.scrollY * 0.001;
         if (window.scrollY < 2000) {
-          if (currentModelIndex !== 1) {
-            changeModel();
-          }
-        } else {
+          models[currentModelIndex].rotation.y = window.scrollY * 0.005;
           if (currentModelIndex !== 0) {
             changeModel();
           }
+        } else {
+          if (currentModelIndex !== 1) {
+            changeModel();
+          }
+        }
+        if (
+          currentModelIndex !== 0 &&
+          scrollY > 4000 &&
+          currentMaterial !== material2
+        ) {
+          models[currentModelIndex].traverse((o: any) => {
+            if (o.isMesh) {
+              o.material.metalness = 0.7;
+              o.material = material2;
+            }
+          });
+          currentMaterial = material2;
+          gsap.to(models[currentModelIndex].rotation, {
+            y: -Math.PI * 4,
+            duration: 5,
+            ease: "power4.out",
+          });
+        } else if (
+          currentModelIndex !== 0 &&
+          scrollY < 4000 &&
+          currentMaterial !== material1
+        ) {
+          models[currentModelIndex].traverse((o: any) => {
+            if (o.isMesh) {
+              o.material.metalness = 0.7;
+              o.material = material1;
+            }
+          });
+          currentMaterial = material1;
+          gsap.to(models[currentModelIndex].rotation, {
+            y: Math.PI * 4,
+            duration: 5,
+            ease: "power4.out",
+          });
         }
       });
 

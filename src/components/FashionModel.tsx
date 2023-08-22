@@ -2,30 +2,31 @@ import { useGLTF, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useRef } from "react";
 
-const FashionModel = () => {
+const FashionModel = ({ rotate }: { rotate: boolean }) => {
   const groupRef = useRef(null);
   const gltf1 = useGLTF(`/LOOK_001.glb`);
-  const gltf2 = useGLTF(`/LOOK_002.glb`);
-  const gltf3 = useGLTF(`/LOOK_003.glb`);
-  const gltf4 = useGLTF(`/3d-model/LOOK_004.glb`);
-  const gltf5 = useGLTF(`/3d-model/LOOK_005.glb`);
-  const gltf6 = useGLTF(`/3d-model/LOOK_006.glb`);
+  //   const gltf2 = useGLTF(`/LOOK_002.glb`);
+  //   const gltf3 = useGLTF(`/LOOK_003.glb`);
+  //   const gltf4 = useGLTF(`/3d-model/LOOK_004.glb`);
+  //   const gltf5 = useGLTF(`/3d-model/LOOK_005.glb`);
+  //   const gltf6 = useGLTF(`/3d-model/LOOK_006.glb`);
   // const { scrollY } = useScroll();
   useFrame((state, delta) => {
+    if (!rotate) return;
     // 모든 모델 조금씩 사방으로 이동하기
     // 모델 1
     gltf1.scene.rotation.y += delta / 2;
-    // 모델 2
-    gltf2.scene.rotation.y += delta / 2;
-    // 모델 3
-    gltf3.scene.rotation.z += delta / 3;
+    // // 모델 2
+    // gltf2.scene.rotation.y += delta / 2;
+    // // 모델 3
+    // gltf3.scene.rotation.z += delta / 3;
     // 모델 4
-    gltf4.scene.rotation.y += delta / 4;
-    gltf4.scene.rotation.x += delta / 2;
-    // 모델 5
-    gltf5.scene.rotation.y += delta;
-    // 모델 6
-    gltf6.scene.rotation.x += delta;
+    // gltf4.scene.rotation.y += delta / 4;
+    // gltf4.scene.rotation.x += delta / 2;
+    // // 모델 5
+    // gltf5.scene.rotation.y += delta;
+    // // 모델 6
+    // gltf6.scene.rotation.x += delta;
   });
   return (
     <>
@@ -36,7 +37,7 @@ const FashionModel = () => {
       >
         <primitive object={gltf1.scene} />
       </group>
-      <group position={[0, 0, 10]}>
+      {/* <group position={[0, 0, 10]}>
         <primitive object={gltf2.scene} />
       </group>
       <group
@@ -44,8 +45,8 @@ const FashionModel = () => {
         rotation={[-Math.PI / 16, -Math.PI / 8, -Math.PI / 16]}
       >
         <primitive object={gltf3.scene} />
-      </group>
-      <group
+      </group> */}
+      {/* <group
         position={[35, 5, -80]}
         rotation={[Math.PI / 32, -Math.PI / 8, Math.PI / 8]}
       >
@@ -62,7 +63,7 @@ const FashionModel = () => {
         rotation={[Math.PI / 32, -Math.PI / 8, Math.PI / 8]}
       >
         <primitive object={gltf6.scene} />
-      </group>
+      </group> */}
     </>
   );
 };

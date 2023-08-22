@@ -11,6 +11,7 @@ const FashionModel = dynamic(() => import("../../components/FashionModel"), {
 
 export default function ChangeSmooth() {
   const [canControl, setCanControl] = useState(false);
+  const [rotate, setRotate] = useState(false);
   return (
     <div className="bg-black h-[50000px] flex justify-center items-center relative">
       <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50">
@@ -26,6 +27,14 @@ export default function ChangeSmooth() {
         >
           제어도구 {canControl ? "끄기" : "켜기"}
         </div>
+        <div
+          className="relative left-20 z-10 bg-[#5755d544] text-[#ffffff443] w-40 flex justify-center items-center cursor-pointer rounded-md h-12"
+          onClick={() => {
+            setRotate(!rotate);
+          }}
+        >
+          회전 {rotate ? "끄기" : "켜기"}
+        </div>
         <Canvas
           //   frameloop="demand"
           performance={{ min: 1 }}
@@ -40,7 +49,7 @@ export default function ChangeSmooth() {
           <directionalLight intensity={5} position={[-300, 200, -100]} />
           {/* <directionalLight intensity={2} position={[0, 100, 100]} /> */}
           <ambientLight intensity={0.5} />
-          <FashionModel />
+          <FashionModel rotate={rotate} />
         </Canvas>
       </div>
     </div>

@@ -7,6 +7,8 @@ import TWEEN from "@tweenjs/tween.js";
 import { gsap } from "gsap";
 
 export default function ChangeSmooth() {
+  const [loadedPercent, setLoadedPercent] = React.useState(0);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // 모델의 모든 자식 객체들의 material의 투명도 설정 함수
   function setMaterialOpacity(model: any, opacity: any) {
@@ -26,6 +28,7 @@ export default function ChangeSmooth() {
         antialias: true,
         alpha: true,
       });
+      renderer.outputEncoding = THREE.sRGBEncoding;
       renderer.setClearColor(0x000000, 0);
       // uv 맵
       const textureLoader = new THREE.TextureLoader();
@@ -52,8 +55,14 @@ export default function ChangeSmooth() {
       let models: THREE.Group[] = new Array(2);
       let transitionInProgress = false;
 
+      const loadingManager = new THREE.LoadingManager();
+
+      loadingManager.onProgress = (itemUrl, itemsLoaded, itemsTotal) => {
+        setLoadedPercent((itemsLoaded / itemsTotal) * 100);
+      };
+
       // GLTFLoader 생성
-      const loader = new GLTFLoader();
+      const loader = new GLTFLoader(loadingManager);
 
       // 모델 로드 함수
       const loadModel = (
@@ -192,8 +201,11 @@ export default function ChangeSmooth() {
   }, [canvasRef]);
 
   return (
-    <div className="bg-black h-[50000px] flex justify-center items-center">
+    <div className="bg-black h-[50000px] flex justify-center items-center relative">
       <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50">
+        <div className="relative z-10 bg-white text-red-500">
+          {loadedPercent}%...
+        </div>
         <canvas ref={canvasRef} id="canvas" width="1000" height="1000"></canvas>
       </div>
     </div>

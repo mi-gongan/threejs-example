@@ -37,12 +37,10 @@ export default function ChangeSmooth() {
         </div>
         <Canvas
           //   frameloop="demand"
-          performance={{ min: 1 }}
           camera={{ position: [0, 50, 80] }}
-          onCreated={({ gl }) => {
-            gl.setClearColor(0x000000, 0);
-          }}
-          resize={{ scroll: true, debounce: { scroll: 50, resize: 0 } }}
+          //   onCreated={({ gl }) => {
+          //     gl.setClearColor(0x000000, 0);
+          //   }}
         >
           {canControl && <OrbitControls />}
           <directionalLight intensity={10} position={[200, 0, 0]} />

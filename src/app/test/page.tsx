@@ -47,9 +47,9 @@ export default function ChangeSmooth() {
 
 const FashionModel = () => {
   const groupRef = useRef(null);
-  const gltf1 = useGLTF(`/3d-model/LOOK_001.glb`);
-  const gltf2 = useGLTF(`/3d-model/LOOK_002.glb`);
-  const gltf3 = useGLTF(`/3d-model/LOOK_003.glb`);
+  const gltf1 = useGLTF(`/LOOK_001.glb`);
+  const gltf2 = useGLTF(`/LOOK_002.glb`);
+  const gltf3 = useGLTF(`/LOOK_003.glb`);
   const gltf4 = useGLTF(`/3d-model/LOOK_004.glb`);
   const gltf5 = useGLTF(`/3d-model/LOOK_005.glb`);
   const gltf6 = useGLTF(`/3d-model/LOOK_006.glb`);

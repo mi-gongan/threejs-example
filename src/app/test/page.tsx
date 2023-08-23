@@ -35,17 +35,10 @@ export default function ChangeSmooth() {
         >
           회전 {rotate ? "끄기" : "켜기"}
         </div>
-        <Canvas
-          //   frameloop="demand"
-          camera={{ position: [0, 50, 80] }}
-          //   onCreated={({ gl }) => {
-          //     gl.setClearColor(0x000000, 0);
-          //   }}
-        >
+        <Canvas camera={{ position: [0, 50, 80] }}>
           {canControl && <OrbitControls />}
           <directionalLight intensity={10} position={[200, 0, 0]} />
           <directionalLight intensity={5} position={[-300, 200, -100]} />
-          {/* <directionalLight intensity={2} position={[0, 100, 100]} /> */}
           <ambientLight intensity={0.5} />
           <FashionModel rotate={rotate} />
         </Canvas>

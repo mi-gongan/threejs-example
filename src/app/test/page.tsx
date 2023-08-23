@@ -59,9 +59,7 @@ export default function ChangeSmooth() {
           <directionalLight intensity={10} position={[200, 0, 0]} />
           <directionalLight intensity={5} position={[-300, 200, -100]} />
           <ambientLight intensity={0.5} />
-          <Suspense fallback={<Loader />}>
-            <FashionModel rotate={rotate} />
-          </Suspense>
+          <FashionModel rotate={rotate} />
         </Canvas>
       </div>
     </div>

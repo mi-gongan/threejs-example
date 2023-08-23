@@ -1,7 +1,8 @@
-import { useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useGLTF, useProgress } from "@react-three/drei";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useScroll } from "framer-motion";
 import React, { useRef } from "react";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const FashionModel = ({ rotate }: { rotate: boolean }) => {
   const groupRef = useRef(null);

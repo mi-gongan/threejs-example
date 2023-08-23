@@ -14,12 +14,6 @@ export default function ChangeSmooth() {
   const [rotate, setRotate] = useState(false);
   const { progress } = useProgress();
   const [loadingModal, setLoadingModal] = useState(true);
-
-  useEffect(() => {
-    if (progress === 100) {
-      setLoadingModal(false);
-    }
-  }, [progress]);
   return (
     <div className="bg-black h-[50000px] flex justify-center items-center relative">
       {loadingModal && (
@@ -59,7 +53,7 @@ export default function ChangeSmooth() {
           <directionalLight intensity={10} position={[200, 0, 0]} />
           <directionalLight intensity={5} position={[-300, 200, -100]} />
           <ambientLight intensity={0.5} />
-          <FashionModel rotate={rotate} />
+          <FashionModel rotate={rotate} setLoadingModal={setLoadingModal} />
         </Canvas>
       </div>
     </div>

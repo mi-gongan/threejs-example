@@ -1,10 +1,16 @@
 import { useGLTF, useProgress } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { useScroll } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-const FashionModel = ({ rotate }: { rotate: boolean }) => {
+const FashionModel = ({
+  rotate,
+  setLoadingModal,
+}: {
+  rotate: boolean;
+  setLoadingModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const groupRef = useRef(null);
   const gltf1 = useGLTF(`/Look/Look_001.glb`);
   const gltf2 = useGLTF(`/Look/Look_002.glb`);
@@ -13,6 +19,12 @@ const FashionModel = ({ rotate }: { rotate: boolean }) => {
   const gltf5 = useGLTF(`/Look/Look_005.glb`);
   const gltf6 = useGLTF(`/Look/Look_006.glb`);
   const { scrollY } = useScroll();
+  const { progress } = useProgress();
+  useEffect(() => {
+    if (progress === 100) {
+      setLoadingModal(false);
+    }
+  }, [progress, setLoadingModal]);
   useFrame((state, delta) => {
     if (rotate) {
       // 모델 1

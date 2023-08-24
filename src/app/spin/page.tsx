@@ -41,16 +41,6 @@ export default function ChangeSmooth() {
             제어도구 {canControl ? "끄기" : "켜기"}
           </div>
         )}
-        {!loadingModal && (
-          <div
-            className="relative left-20 z-10 bg-[#5755d544] text-[#ffffff443] w-40 flex justify-center items-center cursor-pointer rounded-md h-12"
-            onClick={() => {
-              setRotate(!rotate);
-            }}
-          >
-            회전 {rotate ? "끄기" : "켜기"}
-          </div>
-        )}
         <Canvas camera={{ position: [0, 50, 150] }}>
           {canControl && <OrbitControls />}
           <directionalLight intensity={10} position={[200, 0, 0]} />

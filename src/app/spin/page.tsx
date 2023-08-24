@@ -5,9 +5,12 @@ import { Canvas } from "@react-three/fiber";
 import { Float, Loader, OrbitControls, useProgress } from "@react-three/drei";
 import dynamic from "next/dynamic";
 
-const FashionModel = dynamic(() => import("../../components/FashionModel"), {
-  ssr: false,
-});
+const SpinFashionModel = dynamic(
+  () => import("../../components/SpinFashionModel"),
+  {
+    ssr: false,
+  }
+);
 
 export default function ChangeSmooth() {
   const [canControl, setCanControl] = useState(false);
@@ -48,13 +51,16 @@ export default function ChangeSmooth() {
             회전 {rotate ? "끄기" : "켜기"}
           </div>
         )}
-        <Canvas camera={{ position: [0, 50, 80] }}>
+        <Canvas camera={{ position: [0, 50, 150] }}>
           {canControl && <OrbitControls />}
           <directionalLight intensity={10} position={[200, 0, 0]} />
           <directionalLight intensity={5} position={[-300, 200, -100]} />
           <ambientLight intensity={0.5} />
           <Float>
-            <FashionModel rotate={rotate} setLoadingModal={setLoadingModal} />
+            <SpinFashionModel
+              rotate={rotate}
+              setLoadingModal={setLoadingModal}
+            />
           </Float>
         </Canvas>
       </div>

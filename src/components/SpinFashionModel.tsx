@@ -39,9 +39,9 @@ const SpinFashionModel = ({
         gltf5.scene,
         gltf6.scene,
       ].forEach((_scene) => {
-        const _x = _scene.position.x + Math.cos(angle) * radius;
-        const _y = _scene.position.y;
-        const _z = _scene.position.z + Math.sin(angle) * radius;
+        const _x = center.x + Math.cos(angle) * radius;
+        const _y = center.y + _scene.position.y;
+        const _z = center.z + Math.sin(angle) * radius;
         _scene.position.set(_x, _y, _z);
       });
     } else {
@@ -58,7 +58,6 @@ const SpinFashionModel = ({
         const _x = Math.cos(angle) * radius;
         const _y = _scene.position.y;
         const _z = Math.sin(angle) * radius;
-        console.log(_x, _y, _z);
         _scene.position.set(_x, _y, _z);
       });
     }
@@ -68,7 +67,7 @@ const SpinFashionModel = ({
     <>
       <group
         ref={groupRef}
-        position={[10, -20, 25]}
+        position={[10, -20, 205]}
         rotation={[Math.PI / 8, Math.PI / 8, -Math.PI / 4]}
         dispose={null}
       >
@@ -78,28 +77,28 @@ const SpinFashionModel = ({
         <primitive object={gltf2.scene} />
       </group>
       <group
-        position={[-20, 0, -60]}
+        position={[-20, 0, 80]}
         rotation={[-Math.PI / 16, -Math.PI / 8, -Math.PI / 16]}
         dispose={null}
       >
         <primitive object={gltf3.scene} />
       </group>
       <group
-        position={[35, 5, -80]}
+        position={[35, 5, -20]}
         rotation={[Math.PI / 32, -Math.PI / 8, Math.PI / 8]}
         dispose={null}
       >
         <primitive object={gltf4.scene} />
       </group>
       <group
-        position={[10, 15, -160]}
+        position={[10, 15, -120]}
         rotation={[-Math.PI / 8, Math.PI - Math.PI / 8, Math.PI / 8]}
         dispose={null}
       >
         <primitive object={gltf5.scene} />
       </group>
       <group
-        position={[30, 30, -200]}
+        position={[30, 30, -180]}
         rotation={[Math.PI / 32, -Math.PI / 8, Math.PI / 8]}
         dispose={null}
       >

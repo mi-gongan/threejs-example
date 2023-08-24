@@ -3,10 +3,12 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
+  Center,
   Float,
   Loader,
   OrbitControls,
   Stars,
+  Text3D,
   useProgress,
 } from "@react-three/drei";
 import dynamic from "next/dynamic";
@@ -47,11 +49,7 @@ export default function ChangeSmooth() {
           <div
             className="absolute left-10 z-10 bg-[#5755d544] text-[#ffffff443] w-40 flex justify-center items-center cursor-pointer rounded-md h-12"
             onClick={() => {
-              if (canControl) {
-                window.location.reload();
-              } else {
-                setCanControl(true);
-              }
+              setCanControl(!canControl);
             }}
           >
             제어도구 {canControl ? "끄기" : "켜기"}
@@ -85,7 +83,7 @@ export default function ChangeSmooth() {
           />
         </motion.div>
 
-        <Canvas camera={{ position: [0, 50, 200] }}>
+        <Canvas camera={{ position: [0, 0, 200] }}>
           {canControl && <OrbitControls />}
           <directionalLight intensity={10} position={[200, 0, 0]} />
           <directionalLight intensity={5} position={[-300, 200, -100]} />
@@ -105,6 +103,15 @@ export default function ChangeSmooth() {
               setLoadingModal={setLoadingModal}
             />
           </Float>
+          <Center>
+            <Text3D
+              font={"/font/pretendard.json"}
+              position={[0, 0, 0]}
+              size={20}
+            >
+              sasdfasdfasd
+            </Text3D>
+          </Center>
         </Canvas>
       </div>
     </div>

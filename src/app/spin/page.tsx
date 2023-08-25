@@ -13,13 +13,8 @@ import {
 } from "@react-three/drei";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import {
-  motion,
-  useAnimation,
-  useMotionValue,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
+import CustomText3D from "@/components/CustomText3D";
 
 const SpinFashionModel = dynamic(
   () => import("../../components/SpinFashionModel"),
@@ -33,7 +28,6 @@ export default function ChangeSmooth() {
   const [rotate, setRotate] = useState(false);
   const { progress } = useProgress();
   const [loadingModal, setLoadingModal] = useState(true);
-  const { scrollYProgress } = useScroll();
 
   return (
     <div className="bg-black h-[50000px] flex justify-center items-center relative">
@@ -104,13 +98,7 @@ export default function ChangeSmooth() {
             />
           </Float>
           <Center>
-            <Text3D
-              font={"/font/pretendard.json"}
-              position={[0, 0, 0]}
-              size={20}
-            >
-              sasdfasdfasd
-            </Text3D>
+            <CustomText3D />
           </Center>
         </Canvas>
       </div>

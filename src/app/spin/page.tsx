@@ -1,12 +1,14 @@
 "use client";
 
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
+  CameraShake,
   Center,
   Float,
   Loader,
   OrbitControls,
+  PerformanceMonitor,
   Stars,
   Text3D,
   useProgress,
@@ -15,6 +17,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import CustomText3D from "@/components/CustomText3D";
+import * as THREE from "three";
 
 const SpinFashionModel = dynamic(
   () => import("../../components/SpinFashionModel"),
@@ -100,8 +103,25 @@ export default function ChangeSmooth() {
           <Center>
             <CustomText3D />
           </Center>
+          {/* <Rig /> */}
+          <PerformanceMonitor />
         </Canvas>
       </div>
     </div>
+  );
+}
+function Rig() {
+  const [vec] = useState(() => new THREE.Vector3());
+  const { camera, mouse } = useThree();
+  useFrame(() => camera.position.lerp(vec.set(mouse.x * 2, 1, 150), 0.05));
+  return (
+    <CameraShake
+      maxYaw={0.01}
+      maxPitch={0.01}
+      maxRoll={0.01}
+      yawFrequency={0.5}
+      pitchFrequency={0.5}
+      rollFrequency={0.4}
+    />
   );
 }
